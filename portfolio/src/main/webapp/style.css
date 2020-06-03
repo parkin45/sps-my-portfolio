@@ -1,7 +1,8 @@
-#content {
+#left-content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: 250px;
+  
 }
 
 #greeting-container {
