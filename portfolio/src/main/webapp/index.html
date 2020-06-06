@@ -2,9 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Anna Parkinson</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
   </head>
   <body style="background-color: #E7FEF9">
     <div id="left-content">
@@ -23,9 +41,42 @@
           I was a TA for a Computer Science program through MSU's Engineering Science Success Academy! The Computer Science portion of the program focused 
           on preparing incoming freshmen for their first intro CS course at MSU by teaching them the basics of Python. My next favorite job was my Research Assistant position at the 
           National Superconducting Cyclotron Lab on MSU's campus; there I would perform data analytics on tin isotope collisions using C++ for a Nuclear Physicist. </p>
-      <img src="https://www.nscl.msu.edu/_files/images/nscl-logo.png" style="width:150px;height:150px;">
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
+      <img src="https://www.nscl.msu.edu/_files/images/nscl-logo.png" style="width:150px;height:175px;">
+      <p style="border:2px solid #9FF0D1;width:450px"> While school work keeps me busy, I do participate in three on campus organizations:
+          the figure skating team, women in computing, and Phi Sigma Rho Sorority for women in engineering and engineering technology! </p>
+
+      <div class="row">
+        <div class="column">
+            <img src="/images/msufst.png"  style="width:115%">
+        </div>
+        <div class="column">
+            <img src="/images/wic.png" style="width:115%">
+        </div>
+        <div class="column">
+            <img src="/images/phisigrho.png" style="width: 115%">
+        </div>
+      </div>
+
+      <p style="border:2px solid #9FF0D1;width:450px"> My current interests in Computer Science are Machine 
+          Learning, Neural Networks, and Data Analytics. I love Computer Science becuase you can do 
+          so many different things with it from web development to building an image recognition model! I think my long-term career
+          goal is to be an outreach director because I am quite passionate about teaching, inspiring, encouraging,
+          and sharing my knowledge with students of all ages - I want every person to have an opportunity to get involved in 
+          Computer Science and Tech!! :)</p> 
+      <p> Here are some of my favs that I highly recommend: </p>
+          <p style="border:2px solid #9FF0D1;width:450px">Music: The 1975, Tame Impala, Glass Animals, Tyler the Creator (follow <a href="https://open.spotify.com/user/punkrockyoungblood?si=emAaRn_xSq-5vFYp6Wwjfw"> my Spotify</a> for bops)</p>
+          <img src="https://media.giphy.com/media/26grAryrmvBWvUZ5C/giphy.gif" style="width:150px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:450px">Drinks: Coffee, Water, Tea (like Uncle Iroh aye)</p>
+          <img src="https://media.tenor.com/images/1989058f90aca655c3a1c22fb046cdaa/tenor.gif" style="width:150px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:450px">Shows: Rick and Morty, Sailor Moon, Avatar: The Last Airbender, Stranger Things, Gilmore Girls </p>
+          <img src="https://media.giphy.com/media/26gBjmGEsrFQlj8g8/giphy.gif" style="width:300px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:450px">Movies: Spirited Away, My Neighbor Totoro, Hidden Figures, Bohemian Rhapsody </p> 
+          <img src="https://media.giphy.com/media/liUhPmZdArpYc/giphy.gif" style="width:300px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:450px">Food: Sushi, Pumpkin Bread, White Cheddar Rice Cakes</p>
+          <img src="https://media.giphy.com/media/A0EsxeeJz7asU/giphy.gif" style=style="width:75px;height:75px;">
+        
+      <h>Click here for Random Anna things:</h>
+      <button style="background-color:#FFE7F2;border-color:#DD43FF;text-align:center;" onclick="addRandomGreeting()">Moon Prism Power Make Up!</button>
       <div id="greeting-container"></div>
     </div>
   </body>
