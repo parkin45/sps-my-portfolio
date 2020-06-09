@@ -15,6 +15,8 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +26,21 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private List<String> quotes;
+
+  @Override
+  public void init() {
+    quotes = new ArrayList<>();
+    quotes.add("They told me computers could only do arithmetic. - Grace Hopper");
+    quotes.add("A ship in port is safe, but that's not what ships are built for. - Grace Hopper");
+    quotes.add("It is much easier to apologise than it is to get permission. - Grace Hopper");
+    quotes.add("If you can't give me poetry, can't you give me poetical science? - Ada Lovelace");
+    quotes.add("I am in a charming state of confusion. - Ada Lovelace");
+  }
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String quote = quotes.get((int) (Math.random() * quotes.size()));
     response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Anna!</h1>");
+    response.getWriter().println(quote);
   }
 }
