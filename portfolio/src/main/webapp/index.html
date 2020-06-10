@@ -2,16 +2,85 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Anna Parkinson</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
   </head>
-  <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
+  <body style="background-color: #E7FEF9">
+    <div id="left-content">
+      <h1 style="border:2px solid #9FF0D1;width:400px;text-align:center">Anna Parkinson <button style="background-color:#ABF7E9;border-color:#2D8E86;text-align:center;" onclick="window.location.href='https://www.linkedin.com/in/anna-parkinson-945245185/';">
+          LinkedIn </button> <button style="background-color:#ABF7E9;border-color:#2D8E86;text-align:center;" onclick="window.location.href='https://github.com/parkin45';">
+          GitHub </button></h1> 
+      <p>Welcome to my portfolio!</p>
+      <img src="/images/skatingpic2020.jpg" style="width:250px;height:250px;border:10px solid #7CD8C5;">
+      <p style="border:2px solid #9FF0D1;width:500px">I am a first generation college student studying Computer Science at Michigan State University! 
+          I plan on having a cognate in Math as well as a minor in Computational Mathematics Science and Engineering which focuses on data science techniques - numbers and graphs are cool. </p> 
+      <img src="https://media.giphy.com/media/1dNLoPznJNsODoOmJj/giphy.gif" style="width:250px;height:250px;">
+      <p style="border:2px solid #9FF0D1;width:500px"> My journey to majoring in Computer Science was not a straight path; 
+          I originally planned to major in Mechanical Engineering, then after participating in Google's CSSI I fell in love with Computer Science and made the switch, 
+          then it was Physics after discovering fascinating research opportunities using computing, and then back to Computer Science once I realized it was my true passion after being a TA for a Computer Science summer program.</p>
+      
+      <p>Click here to see a random quote of a female Comp Sci legend:</p>
+      <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="getRandomQuoteUsingArrowFunctions()">Brace yourself!</button>
+      <div id="quote-container"></div>
+      <p style="border:2px solid #9FF0D1;width:500px"> My two favorite on campus jobs I have had so far have been being a TA and a Research Assistant.
+          I was a TA for a Computer Science program through MSU's Engineering Science Success Academy! The Computer Science portion of the program focused 
+          on preparing incoming freshmen for their first intro CS course at MSU by teaching them the basics of Python. My next favorite job was my Research Assistant position at the 
+          National Superconducting Cyclotron Lab on MSU's campus; there I would perform data analytics on tin isotope collisions using C++ for a Nuclear Physicist. </p>
+      <img src="https://www.nscl.msu.edu/_files/images/nscl-logo.png" style="width:150px;height:175px;">
+      <p style="border:2px solid #9FF0D1;width:500px"> While school work keeps me busy, I do participate in three on campus organizations:
+          the figure skating team, women in computing, and Phi Sigma Rho Sorority for women in engineering and engineering technology! </p>
+
+      <div class="row">
+        <div class="column">
+            <img src="/images/msufst.png"  style="width:115%">
+        </div>
+        <div class="column">
+            <img src="/images/wic.png" style="width:115%">
+        </div>
+        <div class="column">
+            <img src="/images/phisigrho.png" style="width: 115%">
+        </div>
+      </div>
+
+      <p style="border:2px solid #9FF0D1;width:500px"> My current interests in Computer Science are Machine 
+          Learning, Neural Networks, and Data Analytics. I love Computer Science becuase you can do 
+          so many different things with it from web development to building an image recognition model! I think my long-term career
+          goal is to be an outreach director because I am quite passionate about teaching, inspiring, encouraging,
+          and sharing my knowledge with students of all ages - I want every person to have an opportunity to get involved in 
+          Computer Science and Tech!! :)</p> 
+      <h2> Here are some of my favs that I highly recommend: </h2>
+          <p style="border:2px solid #9FF0D1;width:500px">Music: The 1975, Tame Impala, Glass Animals, Tyler the Creator (follow <a href="https://open.spotify.com/user/punkrockyoungblood?si=emAaRn_xSq-5vFYp6Wwjfw"> my Spotify</a> for bops)</p>
+          <img src="https://media.giphy.com/media/26grAryrmvBWvUZ5C/giphy.gif" style="width:150px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:500px">Drinks: Coffee, Water, Tea (like Uncle Iroh aye)</p>
+          <img src="https://media.tenor.com/images/1989058f90aca655c3a1c22fb046cdaa/tenor.gif" style="width:150px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:500px">Shows: Rick and Morty, Sailor Moon, Avatar: The Last Airbender, Stranger Things, Gilmore Girls </p>
+          <img src="https://media.giphy.com/media/26gBjmGEsrFQlj8g8/giphy.gif" style="width:300px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:500px">Movies: Spirited Away, My Neighbor Totoro, Hidden Figures, Bohemian Rhapsody </p> 
+          <img src="https://media.giphy.com/media/liUhPmZdArpYc/giphy.gif" style="width:300px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:500px">Food: Sushi, Pumpkin Bread, White Cheddar Rice Cakes</p>
+          <img src="https://media.giphy.com/media/A0EsxeeJz7asU/giphy.gif" style=style="width:50px;height:50px;">
+        
+      <h>Click here for Random Anna things:</h>
+      <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="addRandomGreeting()">Moon Prism Power Make Up!</button>
       <div id="greeting-container"></div>
     </div>
   </body>

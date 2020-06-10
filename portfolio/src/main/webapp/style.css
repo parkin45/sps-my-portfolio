@@ -1,9 +1,24 @@
-#content {
+#left-content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: 250px;
+  
 }
 
 #greeting-container {
   margin-top: 20px;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
 }
