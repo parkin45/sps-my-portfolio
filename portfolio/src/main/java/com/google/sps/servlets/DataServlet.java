@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> quotes;
+  private ArrayList<String> quotes;
 
   @Override
   public void init() {
@@ -39,8 +40,33 @@ public class DataServlet extends HttpServlet {
   }
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String quote = quotes.get((int) (Math.random() * quotes.size()));
-    response.setContentType("text/html;");
-    response.getWriter().println(quote);
+    /**Picks a quote randomly based on the number of quotes in the ArrayList*/
+    //String quote = quotes.get((int) (Math.random() * quotes.size()));
+    String json = convertToJSON(quotes);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+
+  /**
+   * Converts a ServerStats instance into a JSON string using manual String concatentation.
+   */
+  private String convertToJSON(ArrayList<String> quotes) {
+    String json = "{";
+    json += "\"firstQuote\": ";
+    json += "\"" + quotes.get(0) + "\"";
+    json += ", ";
+    json += "\"secondQuote\": ";
+    json += "\"" + quotes.get(1) + "\"";
+    json += ", ";
+    json += "\"thirdQuote\": ";
+    json += "\"" + quotes.get(2) + "\"";
+    json += ", ";
+    json += "\"fourthQuote\": ";
+    json += "\"" + quotes.get(3) + "\"";
+    json += ", ";
+    json += "\"fifthQuote\": ";
+    json += quotes.get(4);
+    json += "}";
+    return json;
   }
 }
