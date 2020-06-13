@@ -88,25 +88,25 @@ async function getRandomQuoteUsingAsyncAwait() {
 }
 
 /**
- * Fetches quotess from the servers and adds them to the DOM.
+ * Fetches quotes from the servers and adds them to the DOM.
  */
-function getQuote() {
-  fetch('/data').then(response => response.json()).then((quotes) => {
+function getQuotesFromServer() {
+  fetch('/data').then(response => response.json()).then((quote) => {
     // stats is an object, not a string, so we have to
     // reference its fields to create HTML content
 
     const statsListElement = document.getElementById('quote-container');
     statsListElement.innerHTML = '';
     statsListElement.appendChild(
-        createListElement('First Quote: ' + quotes.firstQuote));
+        createListElement('First Quote: ' + quote.firstQuote));
     statsListElement.appendChild(
-        createListElement('Second Quote: ' + quotes.secondQuote));
+        createListElement('Second Quote: ' + quote.secondQuote));
     statsListElement.appendChild(
-        createListElement('Third Quote: ' + quotes.thirdQuote));
+        createListElement('Third Quote: ' + quote.thirdQuote));
     statsListElement.appendChild(
-        createListElement('Fourth Quote: ' + quotes.fourthQuote));
+        createListElement('Fourth Quote: ' + quote.fourthQuote));
     statsListElement.appendChild(
-        createListElement('Fifth Quote: ' + quotes.fifthQuote));
+        createListElement('Fifth Quote: ' + quote.fifthQuote));
   });
 }
 
