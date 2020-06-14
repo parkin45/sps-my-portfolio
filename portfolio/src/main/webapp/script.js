@@ -98,6 +98,43 @@ async function getRandomQuoteUsingAsyncAwait() {
   //document.getElementById('quote-container').innerText = quote;
 }
 
+/** Fetches tasks from the server and adds them to the DOM. */
+function loadComments() {
+  fetch('/data').then(response => response.json()).then((commentsListed) => {
+    const commentListElement = document.getElementById('comments-list');
+    commentsListed.forEach((post) => {
+      commentListElement.appendChild(createTaskElement(post));
+    })
+  });
+}
+/** Creates an element that represents a task, including its delete button. */
+function createCommentElement(post) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'comment';
+
+  const titleElement = document.createElement('span');
+  titleElement.innerText = post.title;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(post);
+
+    // Remove the task from the DOM.
+    commentElement.remove();
+  });
+
+  commentElement.appendChild(titleElement);
+  commentElement.appendChild(deleteButtonElement);
+  return commentElement;
+}
+/** Tells the server to delete the task. */
+function deleteComment(post) {
+  const params = new URLSearchParams();
+  params.append('id', post.id);
+  fetch('/data', {method: 'POST', body: params});
+}
+
 /**
  * Fetches quotess from the servers and adds them to the DOM.
  */

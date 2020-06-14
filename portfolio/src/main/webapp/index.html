@@ -24,7 +24,7 @@
 }
 </style>
   </head>
-  <body style="background-color: #E7FEF9">
+  <body style="background-color: #E7FEF9" onload="getComment()">
     <div id="left-content">
       <h1 style="border:2px solid #9FF0D1;width:400px;text-align:center">Anna Parkinson <button style="background-color:#ABF7E9;border-color:#2D8E86;text-align:center;" onclick="window.location.href='https://www.linkedin.com/in/anna-parkinson-945245185/';">
           LinkedIn </button> <button style="background-color:#ABF7E9;border-color:#2D8E86;text-align:center;" onclick="window.location.href='https://github.com/parkin45';">
@@ -80,7 +80,7 @@
           <p style="border:2px solid #9FF0D1;width:500px">Food: Sushi, Pumpkin Bread, White Cheddar Rice Cakes</p>
           <img src="https://media.giphy.com/media/A0EsxeeJz7asU/giphy.gif" style=style="width:50px;height:50px;">
         
-      <form action="/data" method="POST">
+      <form method="POST" action = "/data">
 
       <p>Enter a list of what you and I have in common:</p>
       <label for="comment_author" class="required">Name</label>
@@ -89,9 +89,8 @@
       <textarea name="text-input" id="comment" rows="10" tabindex="4" style="border:2px solid #9FF0D1;width:500px"></textarea>
       <br/><br/>
       <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="getComment()">Submit</button>
-      <div id="comment_author"></div>
-      <div id="text-input"></div>
     </form>
+    <ul id="comment-list"></ul>
     <p> </p>
       <h>Click here for Random Anna things:</h>
       <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="addRandomGreeting()">Moon Prism Power Make Up!</button>
