@@ -88,9 +88,9 @@ async function getRandomQuoteUsingAsyncAwait() {
 }
 
 /**
- * Fetches quotess from the servers and adds them to the DOM.
+ * Fetches quotes from the servers and adds them to the DOM.
  */
-function getQuote() {
+function getQuotesFromServer() {
   fetch('/data').then(response => response.json()).then((quotes) => {
     // stats is an object, not a string, so we have to
     // reference its fields to create HTML content
