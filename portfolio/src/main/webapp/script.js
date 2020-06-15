@@ -102,10 +102,6 @@ function getQuotesFromServer() {
         createListElement('Second Quote: ' + quotesToGson[1]));
     statsListElement.appendChild(
         createListElement('Third Quote: ' + quotesToGson[2]));
-    // statsListElement.appendChild(
-    //     createListElement('Fourth Quote: ' + quotesToGson.fourthQuote));
-    // statsListElement.appendChild(
-    //     createListElement('Fifth Quote: ' + quotesToGson.fifthQuote));
   });
 }
 
