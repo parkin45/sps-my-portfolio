@@ -14,7 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -26,21 +28,29 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> quotes;
-
-  @Override
-  public void init() {
-    quotes = new ArrayList<>();
-    quotes.add("They told me computers could only do arithmetic. - Grace Hopper");
-    quotes.add("A ship in port is safe, but that's not what ships are built for. - Grace Hopper");
-    quotes.add("It is much easier to apologise than it is to get permission. - Grace Hopper");
-    quotes.add("If you can't give me poetry, can't you give me poetical science? - Ada Lovelace");
-    quotes.add("I am in a charming state of confusion. - Ada Lovelace");
-  }
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String quote = quotes.get((int) (Math.random() * quotes.size()));
-    response.setContentType("text/html;");
-    response.getWriter().println(quote);
+   
+    List<String> quotes = new ArrayList<String>();
+    String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
+    String quoteTwo = "It is much easier to apologise than it is to get permission. - Grace Hopper";
+    String quoteThree = "You can do anything you want to, but you have to work at it - Annie Easley";
+    quotes.add(quoteOne);
+    quotes.add(quoteTwo);
+    quotes.add(quoteThree);
+    
+    
+    String json = convertToJsonUsingGson(quotes);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+
+  /**
+   * Converts a ServerStats instance into a JSON string using GSON
+   */
+  private String convertToJsonUsingGson(List<String> quotesToGson) {
+    Gson gson = new Gson();
+    String json = gson.toJson(quotesToGson);
+    return json;
   }
 }
