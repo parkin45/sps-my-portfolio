@@ -30,9 +30,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    /**Picks a quote randomly based on the number of quotes in the ArrayList*/
-    //String quote = quotes.get((int) (Math.random() * quotes.size()));
-
+   
     List<String> quotes = new ArrayList<String>();
     String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
     String quoteTwo = "It is much easier to apologise than it is to get permission. - Grace Hopper";
@@ -54,22 +52,5 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(quotesToGson);
     return json;
-    // String json = "{";
-    // json += "\"firstQuote\": ";
-    // json += "\"" + quotes.get(0) + "\"";
-    // json += ", ";
-    // json += "\"secondQuote\": ";
-    // json += "\"" + quotes.get(1) + "\"";
-    // json += ", ";
-    // json += "\"thirdQuote\": ";
-    // json += "\"" + quotes.get(2) + "\"";
-    // json += ", ";
-    // json += "\"fourthQuote\": ";
-    // json += "\"" + quotes.get(3) + "\"";
-    // json += ", ";
-    // json += "\"fifthQuote\": ";
-    // json += quotes.get(4);
-    // json += "}";
-    // return json;
   }
 }
