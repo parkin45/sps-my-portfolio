@@ -16,6 +16,7 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,60 +33,37 @@ public class DataServlet extends HttpServlet {
   ArrayList<String> comment_text = new ArrayList<String>();
   ArrayList<String> author_name = new ArrayList<String>();
 
-
   @Override
-//   public void init() {
-//     quotes = new ArrayList<>();
-//     quotes.add("They told me computers could only do arithmetic. - Grace Hopper");
-//     quotes.add("A ship in port is safe, but that's not what ships are built for. - Grace Hopper");
-//     quotes.add("It is much easier to apologise than it is to get permission. - Grace Hopper");
-//     quotes.add("If you can't give me poetry, can't you give me poetical science? - Ada Lovelace");
-//     quotes.add("I am in a charming state of confusion. - Ada Lovelace");
-//   }
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    /**Picks a quote randomly based on the number of quotes in the ArrayList*/
-    //String quote = quotes.get((int) (Math.random() * quotes.size()));
-    //response.setContentType("text/html;");
-    //String json = convertToJSON(quotes);
-    //response.setContentType("application/json;");
-    //response.getWriter().println(json);
+   
+    List<String> quotes = new ArrayList<String>();
+    String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
+    String quoteTwo = "It is much easier to apologise than it is to get permission. - Grace Hopper";
+    String quoteThree = "You can do anything you want to, but you have to work at it - Annie Easley";
+    quotes.add(quoteOne);
+    quotes.add(quoteTwo);
+    quotes.add(quoteThree);
+    
+    
+    String json = convertToJsonUsingGson(quotes);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+
   }
 
   /**
-   * Converts a ServerStats instance into a JSON string using manual String concatentation.
+   * Converts a ServerStats instance into a JSON string using GSON
    */
-  /*private String convertToJSON(ArrayList<String> quotes) {
-    String json = "{";
-    json += "\"firstQuote\": ";
-    json += "\"" + quotes.get(0) + "\"";
-    json += ", ";
-    json += "\"secondQuote\": ";
-    json += "\"" + quotes.get(1) + "\"";
-    json += ", ";
-    json += "\"thirdQuote\": ";
-    json += "\"" + quotes.get(2) + "\"";
-    json += ", ";
-    json += "\"fourthQuote\": ";
-    json += "\"" + quotes.get(3) + "\"";
-    json += ", ";
-    json += "\"fifthQuote\": ";
-    json += quotes.get(4);
-    json += "}";
+  private String convertToJsonUsingGson(List<String> quotesToGson) {
+    Gson gson = new Gson();
+    String json = gson.toJson(quotesToGson);
     return json;
   }
-  private String convertToJsonUsingGson(ArrayList<String> quotes) {
-    Gson gson = new Gson();
-    String json = gson.toJson(quotes);
-    return json;
-  }*/
 
 public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String text = getParameter(request, "text-input", "");
     String comment_author = getParameter(request, "comment_author", "");
-    // Break the text into individual words.
-    //String[] words = text.split("\\s* , \\s*");
-    //String[] author_name = comment_author.split("\\s* , \\s*");
     comment_text.add(text);
     author_name.add(comment_author);
     // Respond with the result.

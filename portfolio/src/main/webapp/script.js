@@ -99,32 +99,29 @@ async function getRandomQuoteUsingAsyncAwait() {
 }
 
 /**
- * Fetches quotess from the servers and adds them to the DOM.
+ * Fetches quotes from the servers and adds them to the DOM.
  */
-/*function getQuotesFromServer() {
-  fetch('/data').then(response => response.json()).then((quotes) => {
+
+function getQuotesFromServer() {
+  fetch('/data').then(response => response.json()).then((quotesToGson) => {
     // stats is an object, not a string, so we have to
     // reference its fields to create HTML content
-
     const statsListElement = document.getElementById('quote-container');
     statsListElement.innerHTML = '';
     statsListElement.appendChild(
-        createListElement('First Quote: ' + quotes.firstQuote));
+        createListElement('First Quote: ' + quotesToGson[0]));
     statsListElement.appendChild(
-        createListElement('Second Quote: ' + quotes.secondQuote));
+        createListElement('Second Quote: ' + quotesToGson[1]));
     statsListElement.appendChild(
-        createListElement('Third Quote: ' + quotes.thirdQuote));
-    statsListElement.appendChild(
-        createListElement('Fourth Quote: ' + quotes.fourthQuote));
-    statsListElement.appendChild(
-        createListElement('Fifth Quote: ' + quotes.fifthQuote));
+        createListElement('Third Quote: ' + quotesToGson[2]));
   });
-}*/
+}
 
-/** Creates an <li> element containing text. */
-/*function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
-}*/
+/** Creates an <p> element containing text. */
+
+function createListElement(text) {
+  const pElement = document.createElement('p');
+  pElement.innerText = text;
+  return pElement;
+}
 
