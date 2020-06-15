@@ -28,46 +28,48 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> quotes;
-
   @Override
-  public void init() {
-    quotes = new ArrayList<>();
-    quotes.add("They told me computers could only do arithmetic. - Grace Hopper");
-    quotes.add("A ship in port is safe, but that's not what ships are built for. - Grace Hopper");
-    quotes.add("It is much easier to apologise than it is to get permission. - Grace Hopper");
-    quotes.add("If you can't give me poetry, can't you give me poetical science? - Ada Lovelace");
-    quotes.add("I am in a charming state of confusion. - Ada Lovelace");
-  }
-  
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     /**Picks a quote randomly based on the number of quotes in the ArrayList*/
     //String quote = quotes.get((int) (Math.random() * quotes.size()));
-    String json = convertToJSON(quotes);
+
+    List<String> quotes = new ArrayList<String>();
+    String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
+    String quoteTwo = "It is much easier to apologise than it is to get permission. - Grace Hopper";
+    String quoteThree = "You can do anything you want to, but you have to work at it - Annie Easley";
+    quotes.add(quoteOne);
+    quotes.add(quoteTwo);
+    quotes.add(quoteThree);
+    
+    
+    String json = convertToJsonUsingGson(quotes);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
   /**
-   * Converts a ServerStats instance into a JSON string using manual String concatentation.
+   * Converts a ServerStats instance into a JSON string using GSON
    */
-  private String convertToJSON(ArrayList<String> quotes) {
-    String json = "{";
-    json += "\"firstQuote\": ";
-    json += "\"" + quotes.get(0) + "\"";
-    json += ", ";
-    json += "\"secondQuote\": ";
-    json += "\"" + quotes.get(1) + "\"";
-    json += ", ";
-    json += "\"thirdQuote\": ";
-    json += "\"" + quotes.get(2) + "\"";
-    json += ", ";
-    json += "\"fourthQuote\": ";
-    json += "\"" + quotes.get(3) + "\"";
-    json += ", ";
-    json += "\"fifthQuote\": ";
-    json += quotes.get(4);
-    json += "}";
+  private String convertToJsonUsingGson(List<String> quotesToGson) {
+    Gson gson = new Gson();
+    String json = gson.toJson(quotesToGson);
     return json;
+    // String json = "{";
+    // json += "\"firstQuote\": ";
+    // json += "\"" + quotes.get(0) + "\"";
+    // json += ", ";
+    // json += "\"secondQuote\": ";
+    // json += "\"" + quotes.get(1) + "\"";
+    // json += ", ";
+    // json += "\"thirdQuote\": ";
+    // json += "\"" + quotes.get(2) + "\"";
+    // json += ", ";
+    // json += "\"fourthQuote\": ";
+    // json += "\"" + quotes.get(3) + "\"";
+    // json += ", ";
+    // json += "\"fifthQuote\": ";
+    // json += quotes.get(4);
+    // json += "}";
+    // return json;
   }
 }
