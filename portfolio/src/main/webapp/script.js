@@ -97,11 +97,11 @@ function getQuotesFromServer() {
     const statsListElement = document.getElementById('quote-container');
     statsListElement.innerHTML = '';
     statsListElement.appendChild(
-        createListElement('First Quote: ' + quotesToGson.get[0]));
+        createListElement('First Quote: ' + quotesToGson[0]));
     statsListElement.appendChild(
-        createListElement('Second Quote: ' + quotesToGson.get[1]));
+        createListElement('Second Quote: ' + quotesToGson[1]));
     statsListElement.appendChild(
-        createListElement('Third Quote: ' + quotesToGson.get[2]));
+        createListElement('Third Quote: ' + quotesToGson[2]));
     // statsListElement.appendChild(
     //     createListElement('Fourth Quote: ' + quotesToGson.fourthQuote));
     // statsListElement.appendChild(
@@ -111,7 +111,7 @@ function getQuotesFromServer() {
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
-  const liElement = document.createElement('li');
+  const liElement = document.createElement('p');
   liElement.innerText = text;
   return liElement;
 }
