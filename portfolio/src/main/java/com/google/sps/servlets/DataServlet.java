@@ -45,9 +45,9 @@ public class DataServlet extends HttpServlet {
     // quotes.add(quoteThree);
     
     response.setContentType("application/json");
-    String json = convertToJsonUsingGson(comment_text);
+    String json_comment = convertToJsonUsingGson(comment_text);
     response.setContentType("application/json;");
-    response.getWriter().println(json);
+    response.getWriter().println(json_comment);
 
   }
 
