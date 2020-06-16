@@ -27,55 +27,6 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-/**
- * Fetches a random quote from the server and adds it to the DOM.
- */
-function getRandomQuote() {
-  console.log('Fetching a random quote of a female Comp Sci legend.');
-
-  // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/data');
-
-  // When the request is complete, pass the response into handleResponse().
-  responsePromise.then(handleResponse);
-}
-
-/**
- * Handles response by converting it to text and passing the result to
- * addQuoteToDom().
- */
-function handleResponse(response) {
-  console.log('Handling the response.');
-
-  // response.text() returns a Promise, because the response is a stream of
-  // content and not a simple variable.
-  const textPromise = response.text();
-
-  // When the response is converted to text, pass the result into the
-  // addQuoteToDom() function.
-  textPromise.then(addQuoteToDom);
-}
-
-/** Adds a random quote to the DOM. */
-function addQuoteToDom(quote) {
-  console.log('Adding quote to dom: ' + quote);
-
-  const quoteContainer = document.getElementById('quote-container');
-  quoteContainer.innerText = quote;
-}
-
-/**
- * The above code is organized to show each individual step, but we can use an
- * ES6 feature called arrow functions to shorten the code. This function
- * combines all of the above code into a single Promise chain. You can use
- * whichever syntax makes the most sense to you.
- */
-function getRandomQuoteUsingArrowFunctions() {
-  fetch('/data').then(response => response.text()).then((quote) => {
-    document.getElementById('quote-container').innerText = quote;
-  });
-}
-
 function getComment() {
     fetch('/data').then(response => response.text()).then((comment_author) => {
     document.getElementById('comment_author').innerText = comment_author;
@@ -95,7 +46,6 @@ async function getRandomQuoteUsingAsyncAwait() {
   const quote = await response.text();
   document.getElementById('comment_author').innerText = comment_author;
   document.getElementById('text-input').innerText = comment;
-  //document.getElementById('quote-container').innerText = quote;
 }
 
 /** Fetches tasks from the server and adds them to the DOM. */
@@ -136,32 +86,28 @@ function deleteComment(post) {
 }
 
 /**
- * Fetches quotess from the servers and adds them to the DOM.
+ * Fetches quotes from the servers and adds them to the DOM.
  */
-/*function getQuotesFromServer() {
-  fetch('/data').then(response => response.json()).then((quotes) => {
+function getQuotesFromServer() {
+  fetch('/data').then(response => response.json()).then((quotesToGson) => {
+
     // stats is an object, not a string, so we have to
     // reference its fields to create HTML content
-
     const statsListElement = document.getElementById('quote-container');
     statsListElement.innerHTML = '';
     statsListElement.appendChild(
-        createListElement('First Quote: ' + quotes.firstQuote));
+        createListElement('First Quote: ' + quotesToGson[0]));
     statsListElement.appendChild(
-        createListElement('Second Quote: ' + quotes.secondQuote));
+        createListElement('Second Quote: ' + quotesToGson[1]));
     statsListElement.appendChild(
-        createListElement('Third Quote: ' + quotes.thirdQuote));
-    statsListElement.appendChild(
-        createListElement('Fourth Quote: ' + quotes.fourthQuote));
-    statsListElement.appendChild(
-        createListElement('Fifth Quote: ' + quotes.fifthQuote));
+        createListElement('Third Quote: ' + quotesToGson[2]));
   });
-}*/
+}
 
-/** Creates an <li> element containing text. */
-/*function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
-}*/
+/** Creates an <p> element containing text. */
+function createListElement(text) {
+  const pElement = document.createElement('p');
+  pElement.innerText = text;
+  return pElement;
+}
 
