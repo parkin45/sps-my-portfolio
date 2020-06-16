@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+
+  //private ArrayList<String> quotes;
+  ArrayList<String> comment_text = new ArrayList<String>();
+  ArrayList<String> author_name = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -43,6 +48,7 @@ public class DataServlet extends HttpServlet {
     String json = convertToJsonUsingGson(quotes);
     response.setContentType("application/json;");
     response.getWriter().println(json);
+
   }
 
   /**
@@ -52,5 +58,30 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(quotesToGson);
     return json;
+  }
+
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String text = getParameter(request, "text-input", "");
+    String comment_author = getParameter(request, "comment_author", "");
+    comment_text.add(text);
+    author_name.add(comment_author);
+    // Respond with the result.
+    response.setContentType("text/html;");
+    response.getWriter().println(author_name.get(0) + ": "+ comment_text.get(0));
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+  }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client*/
+   
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }

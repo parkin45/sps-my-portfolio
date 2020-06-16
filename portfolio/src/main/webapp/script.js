@@ -76,6 +76,15 @@ function getRandomQuoteUsingArrowFunctions() {
   });
 }
 
+function getComment() {
+    fetch('/data').then(response => response.text()).then((comment_author) => {
+    document.getElementById('comment_author').innerText = comment_author;
+  });
+  fetch('/data').then(response => response.text()).then((comment) => {
+    document.getElementById('text-input').innerText = comment;
+  });
+}
+
 /**
  * Another way to use fetch is by using the async and await keywords. This
  * allows you to use the return values directly instead of going through
@@ -84,12 +93,15 @@ function getRandomQuoteUsingArrowFunctions() {
 async function getRandomQuoteUsingAsyncAwait() {
   const response = await fetch('/data');
   const quote = await response.text();
-  document.getElementById('quote-container').innerText = quote;
+  document.getElementById('comment_author').innerText = comment_author;
+  document.getElementById('text-input').innerText = comment;
+  //document.getElementById('quote-container').innerText = quote;
 }
 
 /**
  * Fetches quotes from the servers and adds them to the DOM.
  */
+
 function getQuotesFromServer() {
   fetch('/data').then(response => response.json()).then((quotesToGson) => {
     // stats is an object, not a string, so we have to
@@ -105,10 +117,11 @@ function getQuotesFromServer() {
   });
 }
 
-/** Creates an <li> element containing text. */
+/** Creates an <p> element containing text. */
+
 function createListElement(text) {
-  const liElement = document.createElement('p');
-  liElement.innerText = text;
-  return liElement;
+  const pElement = document.createElement('p');
+  pElement.innerText = text;
+  return pElement;
 }
 
