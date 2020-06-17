@@ -41,7 +41,7 @@
       <p>Click here to see some random quotes of female Comp Sci legends:</p>
       <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="getQuotesFromServer()">Brace yourself!</button>
       <div id="quote-container"></div>
-   
+      
       <p style="border:2px solid #9FF0D1;width:500px"> My two favorite on campus jobs I have had so far have been being a TA and a Research Assistant.
           I was a TA for a Computer Science program through MSU's Engineering Science Success Academy! The Computer Science portion of the program focused 
           on preparing incoming freshmen for their first intro CS course at MSU by teaching them the basics of Python. My next favorite job was my Research Assistant position at the 
@@ -80,8 +80,8 @@
           <p style="border:2px solid #9FF0D1;width:500px">Food: Sushi, Pumpkin Bread, White Cheddar Rice Cakes</p>
           <img src="https://media.giphy.com/media/A0EsxeeJz7asU/giphy.gif" style=style="width:50px;height:50px;">
         
-      <form method="POST" action = "/data">
 
+     <form method="POST" action = "/data">
       <p>Enter a list of what you and I have in common:</p>
       <label for="comment_author" class="required">Name</label>
       <input type="text" name="comment_author" id="comment_author" value="" tabindex="1" style="border:2px solid #9FF0D1;width:500px">
@@ -89,9 +89,11 @@
       <textarea name="text-input" id="comment" rows="10" tabindex="4" style="border:2px solid #9FF0D1;width:500px"></textarea>
       <br/><br/>
       <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="getComment()">Submit</button>
-      
+      <p> </p>
+      <div id="comments-list"></div>
+      <div id="comment_author"></div>
+      <div id="text-input"></div>
     </form>
-    <ul id="comments-list"></ul>
     <p> </p>
       <h>Click here for Random Anna things:</h>
       <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="addRandomGreeting()">Moon Prism Power Make Up!</button>

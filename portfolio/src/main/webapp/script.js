@@ -26,7 +26,7 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
-
+//Adds comments
 function getComment() {
     fetch('/data').then(response => response.text()).then((comment_author) => {
     document.getElementById('comment_author').innerText = comment_author;
@@ -35,19 +35,6 @@ function getComment() {
     document.getElementById('text-input').innerText = comment;
   });
 }
-
-/**
- * Another way to use fetch is by using the async and await keywords. This
- * allows you to use the return values directly instead of going through
- * Promises.
- */
-async function getRandomQuoteUsingAsyncAwait() {
-  const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('comment_author').innerText = comment_author;
-  document.getElementById('text-input').innerText = comment;
-}
-
 /** Fetches tasks from the server and adds them to the DOM. */
 function loadComments() {
   fetch('/data').then(response => response.json()).then((commentsListed) => {
@@ -84,7 +71,6 @@ function deleteComment(post) {
   params.append('id', post.id);
   fetch('/data', {method: 'POST', body: params});
 }
-
 /**
  * Fetches quotes from the servers and adds them to the DOM.
  */
@@ -103,7 +89,6 @@ function getQuotesFromServer() {
         createListElement('Third Quote: ' + quotesToGson[2]));
   });
 }
-
 /** Creates an <p> element containing text. */
 function createListElement(text) {
   const pElement = document.createElement('p');

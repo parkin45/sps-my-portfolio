@@ -26,7 +26,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,10 +38,13 @@ public class DataServlet extends HttpServlet {
   
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     String text = request.getParameter("text-input");
     String comment_author = request.getParameter("comment_author");
-
+    comment_text.add(text);
+    author_name.add(comment_author);
+    // Respond with the result.
+    response.setContentType("text/html;");
+    response.getWriter().println(author_name.get(0) + ": "+ comment_text.get(0));
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Entity messageEntity = new Entity("Message");
@@ -59,11 +61,12 @@ public class DataServlet extends HttpServlet {
     // datastore.delete(messageEntityKey);
   }
 
+  //private ArrayList<String> quotes;
+  ArrayList<String> comment_text = new ArrayList<String>();
+  ArrayList<String> author_name = new ArrayList<String>();
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    response.setContentType("application/json;");
-     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
@@ -74,7 +77,14 @@ public class DataServlet extends HttpServlet {
       String name = (String) entity.getProperty("comment_author");
       response.getOutputStream().println(name + ": " + message);
     }
-    String json_comment = new Gson().toJson(comment);
+    
+    response.setContentType("application/json");
+    //converts Json comment to Gson
+    String json_comment = convertToJsonUsingGson(comment_text);
+    response.getWriter().println(json_comment);
+    //converts Json author name to Gson
+    String json_authorName = convertToJsonUsingGson(author_name);
+    response.getWriter().println(json_authorName);
     
     List<String> quotes = new ArrayList<String>();
     String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
@@ -83,15 +93,27 @@ public class DataServlet extends HttpServlet {
     quotes.add(quoteOne);
     quotes.add(quoteTwo);
     quotes.add(quoteThree);
-    
+    //converts quotes to Gson
     String json = convertToJsonUsingGson(quotes);
-    response.setContentType("application/json;");
     response.getWriter().println(json);
-  } 
-   private String convertToJsonUsingGson(List<String> quotesToGson) {
+  }
+  /**
+   * Converts a ServerStats instance into a JSON string using GSON
+   */
+  private String convertToJsonUsingGson(List<String> quotesToGson) {
     Gson gson = new Gson();
     String json = gson.toJson(quotesToGson);
     return json;
   }
- 
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client*/  
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
+  }
 }
+
