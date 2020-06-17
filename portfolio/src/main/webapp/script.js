@@ -28,18 +28,18 @@ function addRandomGreeting() {
 }
 //Adds comments
 function getComment() {
-    fetch('/data').then(response => response.text()).then((comment_author) => {
+    fetch('/data').then(response => response.json()).then((comment_author) => {
     document.getElementById('comment_author').innerText = comment_author;
   });
-  fetch('/data').then(response => response.text()).then((comment) => {
+  fetch('/data').then(response => response.json()).then((comment) => {
     document.getElementById('text-input').innerText = comment;
   });
 }
 /** Fetches tasks from the server and adds them to the DOM. */
 function loadComments() {
-  fetch('/data').then(response => response.json()).then((commentsListed) => {
+  fetch('/data').then(response => response.json()).then((comments) => {
     const commentListElement = document.getElementById('comments-list');
-    commentsListed.forEach((post) => {
+    comments.forEach((post) => {
       commentListElement.appendChild(createTaskElement(post));
     })
   });
@@ -47,10 +47,10 @@ function loadComments() {
 /** Creates an element that represents a task, including its delete button. */
 function createCommentElement(post) {
   const commentElement = document.createElement('li');
-  commentElement.className = 'comment';
+  commentElement.className = 'post';
 
-  const titleElement = document.createElement('span');
-  titleElement.innerText = post.title;
+  const textElement = document.createElement('span');
+  textElement.innerText = post.text;
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
@@ -61,7 +61,7 @@ function createCommentElement(post) {
     commentElement.remove();
   });
 
-  commentElement.appendChild(titleElement);
+  commentElement.appendChild(textElement);
   commentElement.appendChild(deleteButtonElement);
   return commentElement;
 }
@@ -75,19 +75,16 @@ function deleteComment(post) {
  * Fetches quotes from the servers and adds them to the DOM.
  */
 function getQuotesFromServer() {
-  fetch('/data').then(response => response.json()).then((quotesToGson) => {
+const serverQuotes = ["I am in a charming state of confusion. - Ada Lovelace","It is much easier to apologise than it is to get permission. - Grace Hopper", "You can do anything you want to, but you have to work at it - Annie Easley"]
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerHTML = '';
+    quoteContainer.appendChild(
+        createListElement('First Quote: ' + serverQuotes[0]));
+    quoteContainer.appendChild(
+        createListElement('Second Quote: ' + serverQuotes[1]));
+    quoteContainer.appendChild(
+        createListElement('Third Quote: ' + serverQuotes[2]));
 
-    // stats is an object, not a string, so we have to
-    // reference its fields to create HTML content
-    const statsListElement = document.getElementById('quote-container');
-    statsListElement.innerHTML = '';
-    statsListElement.appendChild(
-        createListElement('First Quote: ' + quotesToGson[0]));
-    statsListElement.appendChild(
-        createListElement('Second Quote: ' + quotesToGson[1]));
-    statsListElement.appendChild(
-        createListElement('Third Quote: ' + quotesToGson[2]));
-  });
 }
 /** Creates an <p> element containing text. */
 function createListElement(text) {

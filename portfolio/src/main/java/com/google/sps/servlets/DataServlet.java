@@ -23,8 +23,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
+import com.google.sps.data.Message;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -34,17 +34,17 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
+
 public class DataServlet extends HttpServlet {
-  
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("text-input");
     String comment_author = request.getParameter("comment_author");
-    comment_text.add(text);
-    author_name.add(comment_author);
-    // Respond with the result.
-    response.setContentType("text/html;");
-    response.getWriter().println(author_name.get(0) + ": "+ comment_text.get(0));
+    // comment_text.add(text);
+    // author_name.add(comment_author);
+    // // Respond with the result.
+    // // response.setContentType("application/json;");
+    // response.getWriter().println(author_name.get(0) + ": "+ comment_text.get(0));
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Entity messageEntity = new Entity("Message");
@@ -56,36 +56,44 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
 
     //deletes stuff 
-    // long id = Long.parseLong(request.getParameter("id"));
-    // Key messageEntityKey = KeyFactory.createKey("Message", id);
-    // datastore.delete(messageEntityKey);
+    long id = Long.parseLong(request.getParameter("id"));
+    Key messageEntityKey = KeyFactory.createKey("Message", id);
+    datastore.delete(messageEntityKey);
   }
 
   //private ArrayList<String> quotes;
-  ArrayList<String> comment_text = new ArrayList<String>();
-  ArrayList<String> author_name = new ArrayList<String>();
+//   ArrayList<String> comment_text = new ArrayList<String>();
+//   ArrayList<String> author_name = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    List<String> comment = new ArrayList<String>();
+    List<Message> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      String message = (String) entity.getProperty("text");
+      long id = entity.getKey().getId();
+      String message_text = (String) entity.getProperty("text");
       String name = (String) entity.getProperty("comment_author");
-      response.getOutputStream().println(name + ": " + message);
+      long timestamp = (long) entity.getProperty("timestamp");
+      
+      Message post = new Message(message_text, name, timestamp, id);
+      comments.add(post);
     }
-    
-    response.setContentType("application/json");
-    //converts Json comment to Gson
-    String json_comment = convertToJsonUsingGson(comment_text);
-    response.getWriter().println(json_comment);
-    //converts Json author name to Gson
-    String json_authorName = convertToJsonUsingGson(author_name);
-    response.getWriter().println(json_authorName);
-    
+    Gson gson = new Gson();
+
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(comments));
+
+    // //converts Json author name to Gson
+    // String json_authorName = convertToJsonUsingGson(author_name);
+    // response.getWriter().println(json_authorName);
+    // //converts Json comment to Gson
+    // String json_comment = convertToJsonUsingGson(comment_text);
+    // response.getWriter().println(json_comment);
+
+
     List<String> quotes = new ArrayList<String>();
     String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
     String quoteTwo = "It is much easier to apologise than it is to get permission. - Grace Hopper";
@@ -93,12 +101,9 @@ public class DataServlet extends HttpServlet {
     quotes.add(quoteOne);
     quotes.add(quoteTwo);
     quotes.add(quoteThree);
-    //converts quotes to Gson
-    String json = convertToJsonUsingGson(quotes);
-    response.getWriter().println(json);
   }
   /**
-   * Converts a ServerStats instance into a JSON string using GSON
+   * Converts a  instance into a JSON string using GSON
    */
   private String convertToJsonUsingGson(List<String> quotesToGson) {
     Gson gson = new Gson();
