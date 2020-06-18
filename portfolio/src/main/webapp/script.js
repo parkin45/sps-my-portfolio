@@ -27,14 +27,14 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 //Adds comments
-function getComment() {
-    fetch('/data').then(response => response.json()).then((comment_author) => {
-    document.getElementById('comment_author').innerText = comment_author;
-  });
-  fetch('/data').then(response => response.json()).then((comment) => {
-    document.getElementById('text-input').innerText = comment;
-  });
-}
+// function getComment() {
+//     fetch('/data').then(response => response.json()).then((comment_author) => {
+//     document.getElementById('comment_author').innerText = comment_author;
+//   });
+//   fetch('/data').then(response => response.json()).then((comment) => {
+//     document.getElementById('text-input').innerText = comment;
+//   });
+// }
 /** Fetches tasks from the server and adds them to the DOM. */
 function loadComments() {
   fetch('/data').then(response => response.json()).then((comments) => {
@@ -69,7 +69,7 @@ function createCommentElement(post) {
 function deleteComment(post) {
   const params = new URLSearchParams();
   params.append('id', post.id);
-  fetch('/data', {method: 'POST', body: params});
+  fetch('/delete', {method: 'POST', body: params});
 }
 /**
  * Fetches quotes from the servers and adds them to the DOM.

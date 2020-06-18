@@ -38,32 +38,19 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = request.getParameter("text-input");
-    String comment_author = request.getParameter("comment_author");
-    // comment_text.add(text);
-    // author_name.add(comment_author);
-    // // Respond with the result.
-    // // response.setContentType("application/json;");
-    // response.getWriter().println(author_name.get(0) + ": "+ comment_text.get(0));
+    // String text = request.getParameter("text-input");
+    // String comment_author = request.getParameter("comment_author");
+    // long timestamp = System.currentTimeMillis();
     
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Entity messageEntity = new Entity("Message");
-    messageEntity.setProperty("text", text);
-    messageEntity.setProperty("comment_author", comment_author);
-    messageEntity.setProperty("timestamp", System.currentTimeMillis());
-    datastore.put(messageEntity);
+    // DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    // Entity messageEntity = new Entity("Message");
+    // messageEntity.setProperty("text", text);
+    // messageEntity.setProperty("comment_author", comment_author);
+    // messageEntity.setProperty("timestamp", System.currentTimeMillis());
+    // datastore.put(messageEntity);
 
-    response.sendRedirect("/index.html");
-
-    //deletes stuff 
-    long id = Long.parseLong(request.getParameter("id"));
-    Key messageEntityKey = KeyFactory.createKey("Message", id);
-    datastore.delete(messageEntityKey);
+    // response.sendRedirect("/index.html");
   }
-
-  //private ArrayList<String> quotes;
-//   ArrayList<String> comment_text = new ArrayList<String>();
-//   ArrayList<String> author_name = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -74,13 +61,14 @@ public class DataServlet extends HttpServlet {
     List<Message> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
-      String message_text = (String) entity.getProperty("text");
-      String name = (String) entity.getProperty("comment_author");
+      String text = (String) entity.getProperty("text");
+      String comment_author = (String) entity.getProperty("comment_author");
       long timestamp = (long) entity.getProperty("timestamp");
-      
-      Message post = new Message(message_text, name, timestamp, id);
+
+      Message post = new Message(text, comment_author, timestamp, id);
       comments.add(post);
     }
+    
     Gson gson = new Gson();
 
     response.setContentType("application/json;");

@@ -81,18 +81,16 @@
           <img src="https://media.giphy.com/media/A0EsxeeJz7asU/giphy.gif" style=style="width:50px;height:50px;">
         
 
-     <form method="POST" action = "/data">
+     <form action = "/new" method="POST">
       <p>Enter a list of what you and I have in common:</p>
       <label for="comment_author" class="required">Name</label>
-      <input type="text" name="comment_author" id="comment_author" value="" tabindex="1" style="border:2px solid #9FF0D1;width:500px">
+      <input type="text" name="comment_author" style="border:2px solid #9FF0D1;width:500px">
       <label for="comment" class="required">Comment</label>
-      <textarea name="text-input" id="comment" rows="10" tabindex="4" style="border:2px solid #9FF0D1;width:500px"></textarea>
+      <input type = "text" name="text-input" style="border:2px solid #9FF0D1;width:500px">
       <br/><br/>
       <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;">Submit</button>
       <p> </p>
-      <div id="comments-list"></div>
-      <div id="comment_author"></div>
-      <div id="text-input"></div>
+      <ul id="comments-list"></ul>
     </form>
     <p> </p>
       <h>Click here for Random Anna things:</h>
