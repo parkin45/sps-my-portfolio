@@ -15,11 +15,11 @@ public class NewMessage extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = request.getParameter("text-input");
+    String text = request.getParameter("text");
     String comment_author = request.getParameter("comment_author");
     long timestamp = System.currentTimeMillis();
 
-    Entity messageEntity = new Entity("Message");
+    Entity messageEntity = new Entity("Comment");
     messageEntity.setProperty("text", text);
     messageEntity.setProperty("comment_author", comment_author);
     messageEntity.setProperty("timestamp", System.currentTimeMillis());

@@ -17,7 +17,8 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['I started skating at 2 years old and started figure skating at 7 years old', 'My favorite color is blue', 'Undertale is one of my fav PC games','I want to be a Jeopardy! contestant one day', 'I love voting', 'I like a lot of different generes of music','I like to read and draw', 'I really like Anime, but you probably suspected that from the button that revealed this message'];
+      ['I started skating at 2 years old and started figure skating at 7 years old', 'My favorite color is blue', 'Undertale is one of my fav PC games','I want to be a Jeopardy! contestant one day', 
+      'I have been learning Japanese, こんにちは 元気ですか?', 'I like a lot of different generes of music','I like to read and draw', 'I really like Anime, but you probably suspected that from the button that revealed this message'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -26,34 +27,32 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
-//Adds comments
-// function getComment() {
-//     fetch('/data').then(response => response.json()).then((comment_author) => {
-//     document.getElementById('comment_author').innerText = comment_author;
-//   });
-//   fetch('/data').then(response => response.json()).then((comment) => {
-//     document.getElementById('text-input').innerText = comment;
-//   });
-// }
+
 /** Fetches tasks from the server and adds them to the DOM. */
 function loadComments() {
   fetch('/data').then(response => response.json()).then((comments) => {
     const commentListElement = document.getElementById('comments-list');
     comments.forEach((post) => {
-      commentListElement.appendChild(createTaskElement(post));
+      commentListElement.appendChild(createCommentElement(post));
     })
   });
 }
 /** Creates an element that represents a task, including its delete button. */
 function createCommentElement(post) {
-  const commentElement = document.createElement('li');
+  const commentElement = document.createElement('p');
   commentElement.className = 'post';
 
-  const textElement = document.createElement('span');
+  const authorElement = document.createElement('span');
+  authorElement.innerText = post.comment_author;
+  
+
+  const textElement = document.createElement('p');
   textElement.innerText = post.text;
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.style.backgroundColor = '#FFEAFF';
+  deleteButtonElement.style.borderColor = '#FCCAE2';
   deleteButtonElement.addEventListener('click', () => {
     deleteComment(post);
 
@@ -61,6 +60,7 @@ function createCommentElement(post) {
     commentElement.remove();
   });
 
+  commentElement.appendChild(authorElement);
   commentElement.appendChild(textElement);
   commentElement.appendChild(deleteButtonElement);
   return commentElement;
@@ -84,7 +84,6 @@ const serverQuotes = ["I am in a charming state of confusion. - Ada Lovelace","I
         createListElement('Second Quote: ' + serverQuotes[1]));
     quoteContainer.appendChild(
         createListElement('Third Quote: ' + serverQuotes[2]));
-
 }
 /** Creates an <p> element containing text. */
 function createListElement(text) {

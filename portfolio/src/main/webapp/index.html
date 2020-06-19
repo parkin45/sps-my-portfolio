@@ -73,29 +73,38 @@
           <img src="https://media.giphy.com/media/26grAryrmvBWvUZ5C/giphy.gif" style="width:150px;height:150px;">
           <p style="border:2px solid #9FF0D1;width:500px">Drinks: Coffee, Water, Tea (like Uncle Iroh aye)</p>
           <img src="https://media.tenor.com/images/1989058f90aca655c3a1c22fb046cdaa/tenor.gif" style="width:150px;height:150px;">
-          <p style="border:2px solid #9FF0D1;width:500px">Shows: Rick and Morty, Sailor Moon, Avatar: The Last Airbender, Stranger Things, Gilmore Girls </p>
-          <img src="https://media.giphy.com/media/26gBjmGEsrFQlj8g8/giphy.gif" style="width:300px;height:150px;">
+          <p style="border:2px solid #9FF0D1;width:500px">Shows: Demon Slayer:鬼滅の刃, Rick and Morty, Sailor Moon, Avatar: The Last Airbender, Stranger Things, Gilmore Girls </p>
+          <div class="row-gif">
+            <div class="column-gif">
+             <img src="https://media.giphy.com/media/26gBjmGEsrFQlj8g8/giphy.gif" style="width:200%">
+            </div>
+            <img src="https://media.giphy.com/media/J6JazAkCVLId91L4yM/giphy.gif" style="width:100%;padding:5px">
+          </div>
           <p style="border:2px solid #9FF0D1;width:500px">Movies: Spirited Away, My Neighbor Totoro, Hidden Figures, Bohemian Rhapsody </p> 
           <img src="https://media.giphy.com/media/liUhPmZdArpYc/giphy.gif" style="width:300px;height:150px;">
           <p style="border:2px solid #9FF0D1;width:500px">Food: Sushi, Pumpkin Bread, White Cheddar Rice Cakes</p>
-          <img src="https://media.giphy.com/media/A0EsxeeJz7asU/giphy.gif" style=style="width:50px;height:50px;">
+          <img src="https://media.giphy.com/media/A0EsxeeJz7asU/giphy.gif" style="width:250px;height:200px;">
         
 
-     <form action = "/new" method="POST">
+    <form action = "/new" method="POST">
       <p>Enter a list of what you and I have in common:</p>
       <label for="comment_author" class="required">Name</label>
       <input type="text" name="comment_author" style="border:2px solid #9FF0D1;width:500px">
       <label for="comment" class="required">Comment</label>
-      <input type = "text" name="text-input" style="border:2px solid #9FF0D1;width:500px">
-      <br/><br/>
-      <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;">Submit</button>
+      <textarea type = "text" name="text" style="border:2px solid #9FF0D1;width:500px"></textarea>
       <p> </p>
-      <ul id="comments-list"></ul>
+      <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;">Submit</button>
     </form>
+    <hr/>
+    <ul id="comments-list"></ul>
     <p> </p>
+    <hr/>
+    <br/><br/>
       <h>Click here for Random Anna things:</h>
+      <p> </p>
       <button style="background-color:#FFEAFF;border-color:#FCCAE2;text-align:center;" onclick="addRandomGreeting()">Moon Prism Power Make Up!</button>
       <div id="greeting-container"></div>
+      <br/><br/>
     </div>
   </body>
 </html>

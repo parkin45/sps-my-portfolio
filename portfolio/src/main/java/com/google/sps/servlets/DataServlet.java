@@ -37,52 +37,26 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DataServlet extends HttpServlet {
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // String text = request.getParameter("text-input");
-    // String comment_author = request.getParameter("comment_author");
-    // long timestamp = System.currentTimeMillis();
-    
-    // DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    // Entity messageEntity = new Entity("Message");
-    // messageEntity.setProperty("text", text);
-    // messageEntity.setProperty("comment_author", comment_author);
-    // messageEntity.setProperty("timestamp", System.currentTimeMillis());
-    // datastore.put(messageEntity);
-
-    // response.sendRedirect("/index.html");
-  }
-
-  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     List<Message> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      long id = entity.getKey().getId();
       String text = (String) entity.getProperty("text");
       String comment_author = (String) entity.getProperty("comment_author");
       long timestamp = (long) entity.getProperty("timestamp");
+      long id = entity.getKey().getId();
 
       Message post = new Message(text, comment_author, timestamp, id);
       comments.add(post);
     }
-    
     Gson gson = new Gson();
-
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
 
-    // //converts Json author name to Gson
-    // String json_authorName = convertToJsonUsingGson(author_name);
-    // response.getWriter().println(json_authorName);
-    // //converts Json comment to Gson
-    // String json_comment = convertToJsonUsingGson(comment_text);
-    // response.getWriter().println(json_comment);
-
-
-    List<String> quotes = new ArrayList<String>();
+    List<String> quotes = new ArrayList<>();
     String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
     String quoteTwo = "It is much easier to apologise than it is to get permission. - Grace Hopper";
     String quoteThree = "You can do anything you want to, but you have to work at it - Annie Easley";
