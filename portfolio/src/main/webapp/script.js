@@ -17,7 +17,8 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['I started skating at 2 years old and started figure skating at 7 years old', 'My favorite color is blue', 'Undertale is one of my fav PC games','I want to be a Jeopardy! contestant one day', 'I love voting', 'I like a lot of different generes of music','I like to read and draw', 'I really like Anime, but you probably suspected that from the button that revealed this message'];
+      ['I started skating at 2 years old and started figure skating at 7 years old', 'My favorite color is blue', 'Undertale is one of my fav PC games','I want to be a Jeopardy! contestant one day', 
+      'I have been learning Japanese, こんにちは 元気ですか?', 'I like a lot of different generes of music','I like to read and draw', 'I really like Anime, but you probably suspected that from the button that revealed this message'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -27,98 +28,64 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-/**
- * Fetches a random quote from the server and adds it to the DOM.
- */
-function getRandomQuote() {
-  console.log('Fetching a random quote of a female Comp Sci legend.');
-
-  // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/data');
-
-  // When the request is complete, pass the response into handleResponse().
-  responsePromise.then(handleResponse);
-}
-
-/**
- * Handles response by converting it to text and passing the result to
- * addQuoteToDom().
- */
-function handleResponse(response) {
-  console.log('Handling the response.');
-
-  // response.text() returns a Promise, because the response is a stream of
-  // content and not a simple variable.
-  const textPromise = response.text();
-
-  // When the response is converted to text, pass the result into the
-  // addQuoteToDom() function.
-  textPromise.then(addQuoteToDom);
-}
-
-/** Adds a random quote to the DOM. */
-function addQuoteToDom(quote) {
-  console.log('Adding quote to dom: ' + quote);
-
-  const quoteContainer = document.getElementById('quote-container');
-  quoteContainer.innerText = quote;
-}
-
-/**
- * The above code is organized to show each individual step, but we can use an
- * ES6 feature called arrow functions to shorten the code. This function
- * combines all of the above code into a single Promise chain. You can use
- * whichever syntax makes the most sense to you.
- */
-function getRandomQuoteUsingArrowFunctions() {
-  fetch('/data').then(response => response.text()).then((quote) => {
-    document.getElementById('quote-container').innerText = quote;
+/** Fetches tasks from the server and adds them to the DOM. */
+function loadComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentListElement = document.getElementById('comments-list');
+    comments.forEach((post) => {
+      commentListElement.appendChild(createCommentElement(post));
+    })
   });
 }
+/** Creates an element that represents a task, including its delete button. */
+function createCommentElement(post) {
+  const commentElement = document.createElement('p');
+  commentElement.className = 'post';
 
-function getComment() {
-    fetch('/data').then(response => response.text()).then((comment_author) => {
-    document.getElementById('comment_author').innerText = comment_author;
+  const authorElement = document.createElement('span');
+  authorElement.innerText = post.comment_author;
+  
+
+  const textElement = document.createElement('p');
+  textElement.innerText = post.text;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.style.backgroundColor = '#FFEAFF';
+  deleteButtonElement.style.borderColor = '#FCCAE2';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(post);
+
+    // Remove the task from the DOM.
+    commentElement.remove();
   });
-  fetch('/data').then(response => response.text()).then((comment) => {
-    document.getElementById('text-input').innerText = comment;
-  });
-}
 
-/**
- * Another way to use fetch is by using the async and await keywords. This
- * allows you to use the return values directly instead of going through
- * Promises.
- */
-async function getRandomQuoteUsingAsyncAwait() {
-  const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('comment_author').innerText = comment_author;
-  document.getElementById('text-input').innerText = comment;
-  //document.getElementById('quote-container').innerText = quote;
+  commentElement.appendChild(authorElement);
+  commentElement.appendChild(textElement);
+  commentElement.appendChild(deleteButtonElement);
+  return commentElement;
 }
-
+/** Tells the server to delete the task. */
+function deleteComment(post) {
+  const params = new URLSearchParams();
+  params.append('id', post.id);
+  fetch('/delete', {method: 'POST', body: params});
+}
 /**
  * Fetches quotes from the servers and adds them to the DOM.
  */
-
 function getQuotesFromServer() {
-  fetch('/data').then(response => response.json()).then((quotesToGson) => {
-    // stats is an object, not a string, so we have to
-    // reference its fields to create HTML content
-    const statsListElement = document.getElementById('quote-container');
-    statsListElement.innerHTML = '';
-    statsListElement.appendChild(
-        createListElement('First Quote: ' + quotesToGson[0]));
-    statsListElement.appendChild(
-        createListElement('Second Quote: ' + quotesToGson[1]));
-    statsListElement.appendChild(
-        createListElement('Third Quote: ' + quotesToGson[2]));
-  });
+const serverQuotes = ["I am in a charming state of confusion. - Ada Lovelace","It is much easier to apologise than it is to get permission. - Grace Hopper", "You can do anything you want to, but you have to work at it - Annie Easley"]
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerHTML = '';
+    quoteContainer.appendChild(
+        createListElement('First Quote: ' + serverQuotes[0]));
+    quoteContainer.appendChild(
+        createListElement('Second Quote: ' + serverQuotes[1]));
+    quoteContainer.appendChild(
+        createListElement('Third Quote: ' + serverQuotes[2]));
 }
-
 /** Creates an <p> element containing text. */
-
 function createListElement(text) {
   const pElement = document.createElement('p');
   pElement.innerText = text;
