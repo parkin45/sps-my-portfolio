@@ -56,13 +56,6 @@ public class DataServlet extends HttpServlet {
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
 
-    List<String> quotes = new ArrayList<>();
-    String quoteOne = "I am in a charming state of confusion. - Ada Lovelace";
-    String quoteTwo = "It is much easier to apologise than it is to get permission. - Grace Hopper";
-    String quoteThree = "You can do anything you want to, but you have to work at it - Annie Easley";
-    quotes.add(quoteOne);
-    quotes.add(quoteTwo);
-    quotes.add(quoteThree);
   }
   /**
    * Converts a  instance into a JSON string using GSON
