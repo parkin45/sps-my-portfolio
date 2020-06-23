@@ -20,32 +20,28 @@ public class NewMessage extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("text");
     String comment_author = request.getParameter("comment_author");
+    String languageCode = request.getParameter("language");
     long timestamp = System.currentTimeMillis();
-
-    Entity messageEntity = new Entity("Comment");
-    messageEntity.setProperty("text", text);
-    messageEntity.setProperty("comment_author", comment_author);
-    messageEntity.setProperty("timestamp", System.currentTimeMillis());
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(messageEntity);
-
-    // Get the request parameters.
-    String languageCode = request.getParameter("languageCode");
 
     // Do the translation.
     Translate translate = TranslateOptions.getDefaultInstance().getService();
     Translation translation =
         translate.translate(text, Translate.TranslateOption.targetLanguage(languageCode));
     String translatedText = translation.getTranslatedText();
-    Translation translationAuthor =
-        translate.translate(comment_author, Translate.TranslateOption.targetLanguage(languageCode));
-    String translatedCA = translationAuthor.getTranslatedText();
+    // Translation translationAuthor =
+    //     translate.translate(comment_author, Translate.TranslateOption.targetLanguage(languageCode));
+    // String translatedCA = translationAuthor.getTranslatedText();
 
-    // Output the translation.
-    response.setContentType("application/json");
-    response.getWriter().println(translatedText);
-    response.getWriter().println(translatedCA);
+    Entity messageEntity = new Entity("Comment");
+    messageEntity.setProperty("text", translatedText);
+    messageEntity.setProperty("comment_author", comment_author);
+    messageEntity.setProperty("timestamp", System.currentTimeMillis());
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(messageEntity);
+
+    System.out.println(translatedText);
+    System.out.println(languageCode);
 
     response.sendRedirect("/index.html");
   }

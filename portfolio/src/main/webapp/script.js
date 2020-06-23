@@ -93,25 +93,25 @@ function createListElement(text) {
 }
 
 /**Translation */
-function requestTranslation() {
-    const text = document.getElementById('text').value;
-    const comment_author = document.getElementById('comment_author').value;
-    const languageCode = document.getElementById('language').value;
+// function requestTranslation() {
+//     const text = document.getElementById('text').value;
+//     const comment_author = document.getElementById('comment_author').value;
+//     const languageCode = document.getElementById('language').value;
 
-    const resultContainer = document.getElementById('result');
-    resultContainer.innerText = 'Loading...';
+//     const resultContainer = document.getElementById('result');
+//     resultContainer.innerText = 'Loading...';
 
-    const params = new URLSearchParams();
-    params.append('text', text);
-    params.append('comment_author', comment_author);
-    params.append('languageCode', languageCode);
+//     const params = new URLSearchParams();
+//     params.append('text', text);
+//     params.append('comment_author', comment_author);
+//     params.append('languageCode', languageCode);
 
-    fetch('/new', {
-        method: 'POST',
-        body: params
-    }).then(response => response.json())
-    .then((translatedMessage) => {
-       resultContainer.innerText = translatedMessage;
-    });
-}
+//     fetch('/new', {
+//         method: 'POST',
+//         body: params
+//     }).then(response => response.json())
+//     .then((translatedMessage) => {
+//        resultContainer.innerText = translatedMessage;
+//     });
+// }
 
