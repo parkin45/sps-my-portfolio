@@ -57,6 +57,7 @@ public class DataServlet extends HttpServlet {
     }
 
     Gson gson = new Gson();
+    response.setCharacterEncoding("UTF-8");
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
 

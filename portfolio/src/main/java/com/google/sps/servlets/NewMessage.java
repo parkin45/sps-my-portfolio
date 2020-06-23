@@ -20,7 +20,7 @@ public class NewMessage extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("text");
     String comment_author = request.getParameter("comment_author");
-    String languageCode = request.getParameter("language");
+    String languageCode = request.getParameter("languageCode");
     long timestamp = System.currentTimeMillis();
 
     // Do the translation.
@@ -28,21 +28,18 @@ public class NewMessage extends HttpServlet {
     Translation translation =
         translate.translate(text, Translate.TranslateOption.targetLanguage(languageCode));
     String translatedText = translation.getTranslatedText();
-    // Translation translationAuthor =
-    //     translate.translate(comment_author, Translate.TranslateOption.targetLanguage(languageCode));
-    // String translatedCA = translationAuthor.getTranslatedText();
+    Translation translationAuthor =
+        translate.translate(comment_author, Translate.TranslateOption.targetLanguage(languageCode));
+    String translatedCA = translationAuthor.getTranslatedText();
 
     Entity messageEntity = new Entity("Comment");
     messageEntity.setProperty("text", translatedText);
-    messageEntity.setProperty("comment_author", comment_author);
+    messageEntity.setProperty("comment_author", translatedCA);
     messageEntity.setProperty("timestamp", System.currentTimeMillis());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(messageEntity);
-
-    System.out.println(translatedText);
-    System.out.println(languageCode);
-
+    
     response.sendRedirect("/index.html");
   }
 }
