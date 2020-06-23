@@ -3,6 +3,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +29,23 @@ public class NewMessage extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(messageEntity);
+
+    // Get the request parameters.
+    String languageCode = request.getParameter("languageCode");
+
+    // Do the translation.
+    Translate translate = TranslateOptions.getDefaultInstance().getService();
+    Translation translation =
+        translate.translate(text, Translate.TranslateOption.targetLanguage(languageCode));
+    String translatedText = translation.getTranslatedText();
+    Translation translationAuthor =
+        translate.translate(comment_author, Translate.TranslateOption.targetLanguage(languageCode));
+    String translatedCA = translationAuthor.getTranslatedText();
+
+    // Output the translation.
+    response.setContentType("application/json");
+    response.getWriter().println(translatedText);
+    response.getWriter().println(translatedCA);
 
     response.sendRedirect("/index.html");
   }
